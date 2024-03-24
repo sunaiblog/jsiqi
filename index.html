@@ -1,0 +1,80 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>在线计时器</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            text-align: center;  
+            padding-top: 50px;  
+        }  
+          
+        #timer {  
+            font-size: 2em;  
+            margin-bottom: 20px;  
+        }  
+          
+        #controls {  
+            display: flex;  
+            justify-content: center;  
+        }  
+          
+        #controls button {  
+            margin: 0 10px;  
+            padding: 10px 20px;  
+            font-size: 1em;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div id="timer">00:00:00</div>  
+    <div id="controls">  
+        <button id="start">开始</button>  
+        <button id="stop">停止</button>  
+        <button id="reset">重置</button>  
+    </div>  
+  
+    <script>  
+        let timer = null;  
+        let seconds = 0;  
+        let minutes = 0;  
+        let hours = 0;  
+  
+        function updateTimer() {  
+            seconds++;  
+            if (seconds / 60 === 1) {  
+                seconds = 0;  
+                minutes++;  
+                if (minutes / 60 === 1) {  
+                    minutes = 0;  
+                    hours++;  
+                }  
+            }  
+            const timerDisplay = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;  
+            document.getElementById('timer').textContent = timerDisplay;  
+        }  
+  
+        document.getElementById('start').addEventListener('click', function() {  
+            if (!timer) {  
+                timer = setInterval(updateTimer, 1000);  
+            }  
+        });  
+  
+        document.getElementById('stop').addEventListener('click', function() {  
+            clearInterval(timer);  
+            timer = null;  
+        });  
+  
+        document.getElementById('reset').addEventListener('click', function() {  
+            clearInterval(timer);  
+            timer = null;  
+            seconds = 0;  
+            minutes = 0;  
+            hours = 0;  
+            document.getElementById('timer').textContent = '00:00:00';  
+        });  
+    </script>  
+</body>  
+</html>
